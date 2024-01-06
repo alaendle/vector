@@ -89,6 +89,12 @@ Flag Wall
   Default: False
   Manual: True
 
+Flag BenchPAPI
+  Description: Enable building of benchmarks which use instruction counters.
+               It requires libpapi and only works on Linux so it's protected by flag
+  Default: False
+  Manual: True
+
 
 Library
   Default-Language: Haskell2010
@@ -311,6 +317,37 @@ benchmark algorithms
       , random >= 1.2
       , tasty
       , tasty-bench >= 0.2.1
+      , vector
+
+  ghc-options: -O2
+
+  other-modules:
+        Algo.MutableSet
+        Algo.ListRank
+        Algo.Rootfix
+        Algo.Leaffix
+        Algo.AwShCC
+        Algo.HybCC
+        Algo.Quickhull
+        Algo.Spectral
+        Algo.Tridiag
+        Algo.FindIndexR
+        TestData.ParenTree
+        TestData.Graph
+
+benchmark algorithms-papi
+  if !flag(BenchPAPI)
+    buildable:      False
+  type:             exitcode-stdio-1.0
+  main-is:          MainPAPI.hs
+  hs-source-dirs:   benchmarks
+  default-language: Haskell2010
+
+  build-depends:
+        base >= 2 && < 5
+      , random >= 1.2
+      , tasty
+      , tasty-papi >= 0.1.2.0
       , vector
 
   ghc-options: -O2
