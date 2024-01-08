@@ -336,7 +336,7 @@ benchmark algorithms
         TestData.Graph
 
 benchmark algorithms-papi
-  if !flag(BenchPAPI)
+  if !flag(BenchPAPI) || impl(ghc < 8.2)
     buildable:      False
   type:             exitcode-stdio-1.0
   main-is:          MainPAPI.hs
